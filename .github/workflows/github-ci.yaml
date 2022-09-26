@@ -1,0 +1,42 @@
+name: Botshot-payments deploy 
+
+on:
+  push:
+    tags:
+      - "botpay"
+env:
+
+ IMAGE_URL: $sregistry.digitalocean.com/botshot/botshot-pay
+#  KUBE_DEPLOYMENT_FILE: ${{ secrets.KUBE_DEPLOYMENT_FILE }}
+# KUBE_CONFIG_FILE:
+
+jobs:
+ build_and_push:
+  runs-on: ubuntu-latest 
+  steps:
+   - name: Checkout the repo 
+     uses: actions/checkout@v2 
+   - name: Build a image
+     run: docker build -t $IMAGE_URL:$(echo $GITHUB_SHA | head -c7) .
+   - name: Install doctl to communicate with digital ocean 
+     uses: digitalocean/action-doctl@v2
+     with: 
+        token: dop_v1_87e33a7945444b17af68a221af7d1f09669d92f03b68ac028fb11ebfd6b36d2b
+   - name: Log in to Digital Ocean Container Registery
+     run: doctl registry login
+   - name: Push image to DigitalOcean Container Registery
+     run: docker push  $IMAGE_URL:$(echo $GITHUB_SHA | head -c7)
+   - name: Update deployment file
+     run: TAG=$(echo $GITHUB_SHA | head -c7) && sed -i 's|<image>|registry.digitalocean.com/botshot/botshot-pay:'${TAG}'|' $GITHUB_WORKSPACE/Deployment.yaml
+   - name: read Deployment.yaml files
+     run: cat Deployment.yaml
+     shell: bash
+   - name: Save DigitalOcean kubeconfig with short-lived credentials
+     run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 k8s-botshot
+   - name: Get all pods
+     run: kubectl get nodes
+   - name: get pods
+     run: kubectl get pods 
+   - name: deploy yaml file 
+     run: kubectl apply -f Deployment.yaml --validate=false
+     shell: bash 
