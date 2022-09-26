@@ -3,7 +3,7 @@ name: Botshot-payments deploy
 on:
   push:
     tags:
-      - "botpay"
+      - "botpaydev"
 env:
 
  IMAGE_URL: sregistry.digitalocean.com/botshot/botshot-pay
