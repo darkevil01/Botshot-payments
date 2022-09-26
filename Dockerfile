@@ -11,4 +11,5 @@ RUN npm run build
 FROM nginx:1.21.3-alpine
 COPY --from=build-step /app/build /usr/share/nginx/html
 # COPY ./deploy/nginx.conf /etc/nginx/conf.d/default.conf
+
 EXPOSE 3000
