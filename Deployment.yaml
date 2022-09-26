@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: botshot-dev-
+  namespace: rennovio-dev-api
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  minReadySeconds: 200
+  revisionHistoryLimit: 1
+  selector:
+    matchLabels:
+      app: rennovio-dev-angular
+  template:
+    metadata:
+      labels:
+        app: rennovio-dev-angular
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/arch
+                operator: In
+                values:
+                - amd64
+                - arm64
+            #dnsPolicy: ClusterFirstWithHostNet
+      containers:
+      - name: web-angular
+        name: <image>
+        imagePullPolicy: Always
+      nodeSelector:
+        kubernetes.io/os: linux
+      imagePullSecrets:
+      - name: doctlsec
+        ports:
+        - containerPort: 80
+          protocol: TCP
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 3
+          failureThreshold: 1
+
