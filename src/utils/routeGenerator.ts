@@ -22,7 +22,7 @@ const routeGenerator = ({
   appInfo,
   gatewayDetails,
 }: RouteGenerator) =>
-  `${process.env.REACT_APP_BASE_URL}/?token=${window.btoa(
+  `localhost:3001/?token=${window.btoa(
     JSON.stringify({ userInfo, appInfo, gatewayDetails })
   )}`;
 
