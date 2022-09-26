@@ -11,17 +11,19 @@ type GatewayDetails = {
   payload: any;
 }[];
 
-type TokenGenerator = {
+type RouteGenerator = {
   userInfo: UserInfo;
   appInfo: AppInfo;
   gatewayDetails: GatewayDetails;
 };
 
-const tokenGenerator = ({
+const routeGenerator = ({
   userInfo,
   appInfo,
   gatewayDetails,
-}: TokenGenerator) =>
-  window.btoa(JSON.stringify({ userInfo, appInfo, gatewayDetails }));
+}: RouteGenerator) =>
+  `${process.env.REACT_APP_BASE_URL}/?token=${window.btoa(
+    JSON.stringify({ userInfo, appInfo, gatewayDetails })
+  )}`;
 
-export default tokenGenerator;
+export default routeGenerator;
