@@ -6,7 +6,7 @@ on:
       - "botpay"
 env:
 
- IMAGE_URL: $sregistry.digitalocean.com/botshot/botshot-pay
+ IMAGE_URL: sregistry.digitalocean.com/botshot/botshot-pay
 #  KUBE_DEPLOYMENT_FILE: ${{ secrets.KUBE_DEPLOYMENT_FILE }}
 # KUBE_CONFIG_FILE:
 
