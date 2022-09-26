@@ -21,7 +21,7 @@ jobs:
    - name: Install doctl to communicate with digital ocean 
      uses: digitalocean/action-doctl@v2
      with: 
-        token: 
+        token: ${{secrets.DIGITALOCEAN_ACCESS_TOKEN}}
    - name: Log in to Digital Ocean Container Registery
      run: doctl registry login
    - name: Push image to DigitalOcean Container Registery
