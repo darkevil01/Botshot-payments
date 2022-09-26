@@ -8,7 +8,7 @@ const initialState: IGatewayInfo = {
   gatewayDetails: [],
 };
 
-const formSlice = createSlice({
+const gatewaySlice = createSlice({
   name: "gatewayInfo",
   initialState,
   reducers: {
@@ -19,6 +19,6 @@ const formSlice = createSlice({
   },
 });
 
-export const { setGatewayDetails, resetGateway } = formSlice.actions;
+export const { setGatewayDetails, resetGateway } = gatewaySlice.actions;
 
-export default formSlice.reducer;
+export default gatewaySlice.reducer;

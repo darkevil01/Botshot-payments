@@ -11,10 +11,17 @@ type GatewayDetails = {
   payload: any;
 }[];
 
-const tokenGenerator = (
-  userInfo: UserInfo,
-  appInfo: AppInfo,
-  gatewayDetails: GatewayDetails
-) => window.btoa(JSON.stringify({ userInfo, appInfo, gatewayDetails }));
+type TokenGenerator = {
+  userInfo: UserInfo;
+  appInfo: AppInfo;
+  gatewayDetails: GatewayDetails;
+};
+
+const tokenGenerator = ({
+  userInfo,
+  appInfo,
+  gatewayDetails,
+}: TokenGenerator) =>
+  window.btoa(JSON.stringify({ userInfo, appInfo, gatewayDetails }));
 
 export default tokenGenerator;

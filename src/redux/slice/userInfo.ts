@@ -7,7 +7,7 @@ interface IUserInfo {
 
 const initialState: IUserInfo = { reservationId: "" };
 
-const formSlice = createSlice({
+const userInfoSlice = createSlice({
   name: "userInfo",
   initialState,
   reducers: {
@@ -16,6 +16,6 @@ const formSlice = createSlice({
   },
 });
 
-export const { setUserInfo, resetUser } = formSlice.actions;
+export const { setUserInfo, resetUser } = userInfoSlice.actions;
 
-export default formSlice.reducer;
+export default userInfoSlice.reducer;
